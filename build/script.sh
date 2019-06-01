@@ -11,13 +11,11 @@ DOCKER_TAG="latest"
 
 docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 
-buildctl build --help
-
 buildctl build \
          --frontend dockerfile.v0 \
          --opt platform=linux/${PLATFORM_1} \
          --opt filename=${DOCKERFILE_LOCATION} \
-         --output type=image,name=docker.io/${DOCKER_USER}/${DOCKER_IMAGE}:${DOCKER_TAG}-${PLATFORM_1},push=false \
+         --output type=image,name=docker.io/${DOCKER_USER}/${DOCKER_IMAGE}:${DOCKER_TAG}-${PLATFORM_1},push=true \
          --local dockerfile=. \
          --local context=. \
          --progress plain
@@ -26,7 +24,7 @@ buildctl build \
          --frontend dockerfile.v0 \
          --opt platform=linux/${PLATFORM_2} \
          --opt filename=${DOCKERFILE_LOCATION} \
-         --output type=image,name=docker.io/${DOCKER_USER}/${DOCKER_IMAGE}:${DOCKER_TAG}-${PLATFORM_2},push=false \
+         --output type=image,name=docker.io/${DOCKER_USER}/${DOCKER_IMAGE}:${DOCKER_TAG}-${PLATFORM_2},push=true \
          --local dockerfile=. \
          --local context=. \
          --progress plain
