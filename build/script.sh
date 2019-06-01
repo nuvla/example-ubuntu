@@ -36,3 +36,4 @@ docker manifest create ${MANIFEST} ${MANIFEST}-${PLATFORM_1} ${MANIFEST}-${PLATF
 docker manifest annotate ${MANIFEST} ${MANIFEST}-${PLATFORM_1} --arch ${PLATFORM_1}
 docker manifest annotate ${MANIFEST} ${MANIFEST}-${PLATFORM_2} --arch ${PLATFORM_2}
 docker manifest inspect ${MANIFEST}
+docker manifest push --purge 
