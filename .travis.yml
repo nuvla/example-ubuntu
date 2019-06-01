@@ -3,11 +3,17 @@ dist: xenial
 addons:
   apt:
     packages:
-      - docker-ce
+    - docker-ce
 before_install:
-  - sudo docker run --privileged linuxkit/binfmt:v0.6
-  - sudo docker run -d --privileged  -p 1234:1234 --name buildkit moby/buildkit:latest --addr tcp://0.0.0.0:1234 --oci-worker-platform linux/amd64 --oci-worker-platform linux/arm64
-  - sudo docker cp buildkit:/usr/bin/buildctl /usr/bin/
-  - export BUILDKIT_HOST=tcp://0.0.0.0:1234
+- sudo docker run --privileged linuxkit/binfmt:v0.6
+- sudo docker run -d --privileged  -p 1234:1234 --name buildkit moby/buildkit:latest
+  --addr tcp://0.0.0.0:1234 --oci-worker-platform linux/amd64 --oci-worker-platform
+  linux/arm64
+- sudo docker cp buildkit:/usr/bin/buildctl /usr/bin/
+- export BUILDKIT_HOST=tcp://0.0.0.0:1234
 script:
-  - ./build/script.sh
+- "./build/script.sh"
+env:
+  global:
+  - secure: Hpg/Cp04MxZKqfd7/crypLkt8XoQ0s+Jb1dLpgwpISbvmQXjovtyNDBNOODTEWfRLi9tlkKjXxUCS/u2rnCLTd6tYaKpoySi2TnKdAvwNZRmQ6BIr2uBcxwEqE+bn+Kn6rETEW3DZdCqpQi/Wmb4wEy2jUQVc3JslZefMNaSK4jRS6VnjnMUGHXuQGurMbsaIRPZv2ZhcLIGv/r6FU/gbDmY37NnjiUPWb/0i+EydFEFYtw9lhDuVpF/aVx/GXpz2CPsNWoDdLV0jyYD2Feg9cEgKctdGIneSXw/Hgomppw59cpOfpAlEaUJJsKvvbyGaO7pviMqNIjSH3svMxiwwyp31o2IGrz4GT56wLA+4rh+Dk1L2LFR/DS9peHQ2HNmbRyzW0GP8DYu0gS7TBysHdqR/M0XXKGdhJFmWdsIkyWpT+CUSx/TIlQbixujTUfP1q6gM8K8bEWpoahODB5+NNTIBTkQK+v/fzuExa1TNg2AIEFI7vycKTXmW4ka9O66ilAZvtnoycl3/nwvrn0ReBPPiHZlUhEVK5EtMT/o+okQZY1nHw6/UD7SEUh35lAq4QmSmDv3raACnsEKCXyr3loRQlk0g/M788lgE7DpQrq58SPv818kOGgJEATwXg7m/WN1pRVgHED5O5yNVlVgibkWow/lBWUsxnBh1BPwjAY=
+  - secure: H+N8n1ngaLP6AlGDkkgCLPw9WBqKxLUm0SBE0MruKe2Htmdp0qq/WZJou+BBpdB3t8IhyoX08ezugQD9WhXUREW437TRxwwu7FBeaFnl6neB5tDmSD155irbOz1hTjhTmqctZ4BJzmkIPzlZ2T7dy9NoGqR/hQEi6VX3aOI+0WaX+vQyTftnBTPr+9e2PwhK6k7/uTyKtNNO4rOqzf0uUpVy2t2un2s/k11kF4uOyaBriA0pwTvFRfduCpiLv2UfpObESOmRMZyGzrMJvK+PYlC76cViqzt9LPLsHzn1d9tX6/+3RQ94qGUqnG6by9BajjU3gecuXogLvO5LDlyou6OeN5rHg3OlNa7S2eKiSSjl/nlkdP2kTMU9MjmeJSXNqeLxxo6MGHRxibbLuDT63RfEtCZRzjUU7tPX7lX1OhwMNzBbbp4ntP2un28PNWj55+XT5tDNcl3sQs2UZbcEIFq2DUvzzNmTZEtdP8xPG6spJpi8yJsMbR7ppp9RG3H9VyJNOt9vWCjLZM58BRYRYTdTBPMp6Z3H573vMcBsVerehiJ7l96skaFAA2aaWwrHxd34loMqCFsqPrpjcb54k1031cFN6F8FhyNl1buPVUXQuTED15VikSX+ecwFr5sNekRt8qiOTdoy+6JhPmcY3UsMJu19ugEAQYyvJZKkmF8=
