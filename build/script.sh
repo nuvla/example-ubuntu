@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+export BUILDKIT_HOST=tcp://0.0.0.0:1234
+
 PLATFORM_1=arm64
 PLATFORM_2=amd64
 DOCKERFILE_LOCATION="./Dockerfile"
@@ -7,21 +9,21 @@ DOCKER_USER="someone"
 DOCKER_IMAGE="some_server"
 DOCKER_TAG="latest"
 
-buildctl --help
+buildctl build --help
 
 buildctl build \
          --frontend dockerfile.v0 \
          --opt platform=linux/${PLATFORM_1} \
-         --opt filename=./${DOCKERFILE_LOCATION} \
-         --output type=exporter,name=docker.io/${DOCKER_USER}/${IMAGE}:${TAG}-${PLATFORM_1},push=false \
+         --opt filename=${DOCKERFILE_LOCATION} \
+         --output type=image,name=docker.io/${DOCKER_USER}/${IMAGE}:${TAG}-${PLATFORM_1},push=false \
          --local dockerfile=. \
          --local context=.
 
 buildctl build \
          --frontend dockerfile.v0 \
          --opt platform=linux/${PLATFORM_2} \
-         --opt filename=./${DOCKERFILE_LOCATION} \
-         --output type=exporter,name=docker.io/${DOCKER_USER}/${IMAGE}:${TAG}-${PLATFORM_2},push=false \
+         --opt filename=${DOCKERFILE_LOCATION} \
+         --output type=image,name=docker.io/${DOCKER_USER}/${IMAGE}:${TAG}-${PLATFORM_2},push=false \
          --local dockerfile=. \
          --local context=.
 
