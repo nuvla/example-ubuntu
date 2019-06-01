@@ -1,0 +1,39 @@
+language: minimal
+dist: xenial
+addons:
+  apt:
+    packages:
+      - docker-ce
+before_install:
+  - sudo docker run --privileged linuxkit/binfmt:v0.6
+  - sudo docker run -d --privileged \
+                -p 1234:1234 \
+                --name buildkit moby/buildkit:latest \
+                --addr tcp://0.0.0.0:1234 \
+                --oci-worker-platform linux/amd64 \
+                --oci-worker-platform linux/arm64
+  - sudo docker cp buildkit:/usr/bin/buildctl /usr/bin/
+  - export BUILDKIT_HOST=tcp://0.0.0.0:1234
+script:
+  - PLATFORM=arm64
+  - DOCKERFILE_LOCATION="./Dockerfile"
+  - DOCKER_USER="someone"
+  - DOCKER_IMAGE="some_server"
+  - DOCKER_TAG="latest"
+  - buildctl build \
+             --frontend dockerfile.v0 \
+             --frontend-opt platform=linux/${PLATFORM} \
+             --frontend-opt filename=./${DOCKERFILE_LOCATION} \
+             --exporter image \
+             --exporter-opt name=docker.io/${DOCKER_USER}/${IMAGE}:${TAG}-${PLATFORM} \
+             --exporter-opt push=falsee \
+             --local dockerfile=. \
+             --local context=.
+  - export DOCKER_CLI_EXPERIMENTAL=enabled
+  - docker manifest create someone/my-image:latest \
+           someone/my-image:latest-${PLATFORM_1} \
+           someone/my-image:latest-${PLATFORM_2}
+
+  - docker manifest annotate someone/my-image:latest someone/my-image:latest-${PLATFORM_1} --arch ${PLATFORM_1}
+  - docker manifest annotate someone/my-image:latest someone/my-image:latest-${PLATFORM_2} --arch ${PLATFORM_2}
+  - docker manifest inspect someone/my-image:latest
