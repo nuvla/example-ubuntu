@@ -12,6 +12,7 @@ DOCKER_TAG="latest"
 buildctl build --help
 
 buildctl build \
+         --progress plain \ 
          --frontend dockerfile.v0 \
          --opt platform=linux/${PLATFORM_1} \
          --opt filename=${DOCKERFILE_LOCATION} \
@@ -20,6 +21,7 @@ buildctl build \
          --local context=.
 
 buildctl build \
+         --progress plain \ 
          --frontend dockerfile.v0 \
          --opt platform=linux/${PLATFORM_2} \
          --opt filename=${DOCKERFILE_LOCATION} \
@@ -28,7 +30,7 @@ buildctl build \
          --local context=.
 
 export DOCKER_CLI_EXPERIMENTAL=enabled
-docker manifest create someone/my-image:latest someone/my-image:latest-${PLATFORM_1} someone/my-image:latest-${PLATFORM_2}
-docker manifest annotate someone/my-image:latest someone/my-image:latest-${PLATFORM_1} --arch ${PLATFORM_1}
-docker manifest annotate someone/my-image:latest someone/my-image:latest-${PLATFORM_2} --arch ${PLATFORM_2}
-docker manifest inspect someone/my-image:latest
+sudo docker manifest create someone/my-image:latest someone/my-image:latest-${PLATFORM_1} someone/my-image:latest-${PLATFORM_2}
+sudo docker manifest annotate someone/my-image:latest someone/my-image:latest-${PLATFORM_1} --arch ${PLATFORM_1}
+sudo docker manifest annotate someone/my-image:latest someone/my-image:latest-${PLATFORM_2} --arch ${PLATFORM_2}
+sudo docker manifest inspect someone/my-image:latest
