@@ -33,7 +33,7 @@ ssh -p 2222 root@localhost
 Use the standard Docker commands to stop and remove the container.
 
 ## How to build this image
-
+ 
 To build the container on your current platform, clone the sources
 from the
 [nuvla/example-ubuntu](https://github.com/nuvla/example-ubuntu)
