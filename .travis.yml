@@ -4,15 +4,8 @@ addons:
   apt:
     packages:
     - docker-ce
-before_install:
-- sudo docker run --privileged linuxkit/binfmt:v0.6
-- sudo docker run -d --privileged  -p 1234:1234 --name buildkit moby/buildkit:latest
-  --addr tcp://0.0.0.0:1234 --oci-worker-platform linux/amd64 --oci-worker-platform
-  linux/arm64
-- sudo docker cp buildkit:/usr/bin/buildctl /usr/bin/
-- export BUILDKIT_HOST=tcp://0.0.0.0:1234
-script:
-- "./build/script.sh"
+before_install: ./.travis.before_install.sh 
+script: ./.travis.script.sh
 env:
   global:
   - secure: Qo3LzheQusT/0i4SUa01v+CI3Mj2v7FSwsfxLE+gxK4YlvFcyJdRAyr7LF+GsfQVETCDC6fQhvwDoTXi3uvPDUadlybpwaFnxrrBOL+p79vXm1zMGpms2PoE+Bippv6ubE0+c2rCTEdQs0q9ncstY8DpPQjdB65ScPlYGeG9N1Tty28DHwg9hMQfHqcbz0aQT5I3te4gkyddslmEFwdg+5YE0GSdRB5JS9rtcI6aEfeZd0XrSMW0nzDgWuZ0qT1WWaYxG5GmVp2konBYMS1ISV4rFNY5U/UZaVRsSWx0/VFS4akawyNlrRNie3k8q5TSg+NxoL81v3iDMRr4uoDF84ELsUf/AOibDVEF64chkP+7hBY8ARqvPI1IbqFyGeR70lAvum5RPPgpJTnoLDLl/YH6CB1U6YhWnADEnYt1uipLZBIUht3CZkaAu9yYYwQtjmBDoaHeZzLz97oBvhFCCK+sacjmnXeYSXjHeeiblMZPU5UodN8j2xRFFlHbMT0I68FgRvQJmCyQEkDPi9a4jn1/dnQ0E/A1+p8t9LkGBPKN1A3REZipY6z24TADyuyHTE4tYcwcClv1k0AMnPQfpCWu9nfJ1BJYNdlnW/cJpx16g6tpZXntXDny8SmcbK9P9pP5SCsvSMMDaeyOhni/ZCkSimy6LcgM4gp+ZSBLJ50=

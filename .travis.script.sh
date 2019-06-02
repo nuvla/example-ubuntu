@@ -9,7 +9,8 @@ DOCKER_USER="nuvladev"
 DOCKER_IMAGE="example-ubuntu"
 DOCKER_TAG="latest"
 
-docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+unset HISTFILE
+echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 
 buildctl build \
          --frontend dockerfile.v0 \
