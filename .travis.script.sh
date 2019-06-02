@@ -9,7 +9,7 @@ DOCKER_TAG="latest"
 
 MANIFEST=${DOCKER_USER}/${DOCKER_IMAGE}:${DOCKER_TAG}
 
-platforms=(arm64 amd64)
+platforms=(amd64 arm64)
 manifest_args=(${MANIFEST})
 
 rm -Rf target
@@ -21,7 +21,7 @@ for platform in "${platforms[@]}"; do
            --frontend dockerfile.v0 \
            --opt platform=linux/${platform} \
            --opt filename=${DOCKERFILE_LOCATION} \
-           --output type=docker,name=${DOCKER_IMAGE},dest=/tmp/work/target/${DOCKER_IMAGE}-${platform}.docker.tar \
+           --output type=docker,name=${MANIFEST}-${platform},dest=/tmp/work/target/${DOCKER_IMAGE}-${platform}.docker.tar \
            --local context=/tmp/work \
            --local dockerfile=/tmp/work \
            --progress plain
@@ -32,6 +32,7 @@ done
 
 for platform in "${platforms[@]}"; do
     docker load --input ./target/${DOCKER_IMAGE}-${platform}.docker.tar
+    docker push ${MANIFEST}-${platform}
 done
 
 unset HISTFILE
