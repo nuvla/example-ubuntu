@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-DOCKER_ORG="nuvladev"
+DOCKER_ORG="nuvla"
 DOCKER_IMAGE="example-ubuntu"
 DOCKER_TAG="latest"
 
