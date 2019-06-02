@@ -12,7 +12,7 @@ DOCKER_TAG="latest"
 unset HISTFILE
 echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 
-docker run -it --rm --privileged -v /path/to/dir:/tmp/work --entrypoint buildctl-daemonless.sh moby/buildkit:master \
+docker run -it --rm --privileged -v ${PWD}:/tmp/work --entrypoint buildctl-daemonless.sh moby/buildkit:master \
        build \
        --frontend dockerfile.v0 \
        --opt platform=linux/${PLATFORM_1} \
@@ -22,7 +22,7 @@ docker run -it --rm --privileged -v /path/to/dir:/tmp/work --entrypoint buildctl
        --local dockerfile=/tmp/work \
        --progress plain
 
-docker run -it --rm --privileged -v /path/to/dir:/tmp/work --entrypoint buildctl-daemonless.sh moby/buildkit:master \
+docker run -it --rm --privileged -v ${PWD}:/tmp/work --entrypoint buildctl-daemonless.sh moby/buildkit:master \
        build \
        --frontend dockerfile.v0 \
        --opt platform=linux/${PLATFORM_2} \
