@@ -1,6 +1,10 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y openssh-server && apt-get clean
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && apt-get update -q \
+    && apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" openssh-server \
+    && apt-get clean
+
 RUN mkdir /run/sshd
 
 ADD nuvla-init.sh /root/nuvla-init.sh
