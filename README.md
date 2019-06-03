@@ -16,7 +16,21 @@ Architecture-specific tags:
  - `latest-amd64` ([Dockerfile](https://github.com/nuvla/example-ubuntu/blob/master/Dockerfile))
  - `latest-arm64` ([Dockerfile](https://github.com/nuvla/example-ubuntu/blob/master/Dockerfile))
 
-## How to use this image
+## How to register this image in a Nuvla installation
+
+To register this container on your Nuvla on-premise installation, clone the sources
+from the
+[nuvla/example-ubuntu](https://github.com/nuvla/example-ubuntu)
+GitHub, then run the following commands, after having exported the required environment variables:
+
+```sh
+pip install nuvla-api
+python add-module.py
+```
+
+You should now see the module component in the App Store called *Ubuntu SSHD*.
+
+## How to use this image locally
 
 To run the container:
 
